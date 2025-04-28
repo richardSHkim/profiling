@@ -50,7 +50,7 @@ mmengine - WARNING - Unsupported operator aten::silu_ encountered 92 time(s)
 - 검증 목적으로, 위 그림과 같이 $100 \times 100$ fully connected layer 3개와 batch norm으로 구성된 네트워크를 준비하였음. (그림상 batch norm은 생략함)
 - $[1, 300]$ 크기의 tensor가 $[1, 100]$ 크기의 tensor 3개로 쪼개져서 각각 fully connected layer의 input으로 들어가게 됨.
 - 이때, 3개의 fully connected layer가 단일의 shared layer를 사용하면, parameter 수는 줄어드나, FLOPs 값에는 차이가 없어야 함.
-- 구체적으로, shared layer의 사용 여무에 상관 없이, 하나의 fully connected layer가 10 KMACs 연산량을 가지기에 총 30 KMACs, 즉 60 KFLOPs를 기록해야 함.
+- 구체적으로, shared layer의 사용 여부에 상관 없이, 하나의 fully connected layer가 10 KMACs 연산량을 가지기에 총 30 KMACs, 즉 60 KFLOPs를 기록해야 함.
 
 ```bash
 docker run --gpus all --rm profiling unshared_linears
