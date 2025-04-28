@@ -60,6 +60,6 @@ docker run --gpus all --rm profiling shared_linears
 - 저희는 RTMDET-Ins-s 모델의 FLOPs 값으로 pytorch profiler의 계산 값인 43 GFLOPs를 사용하고자 합니다.
 
 ### Leaderboard Score
-$ 0.1 \times exp(-21 \div 136) - 0.1 \times exp(-43 \div 136) = 0.012261 $
+$0.1 \times exp(-21 \div 136) - 0.1 \times exp(-43 \div 136) = 0.012261$
 - Score 계산식에 21 GFLOPs 대신 43 GFLOPs를 대입하면 0.012261 점이 깎이게 됩니다.
 - 저희가 제출한 최종 score 0.50571 점에서 해당 값을 빼면, 0.49345 점이 됩니다.
