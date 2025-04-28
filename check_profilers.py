@@ -51,9 +51,7 @@ class SharedLinearLayers(torch.nn.Module):
                 self.linears[i].linear = self.linears[0].linear
 
     def forward(self, x):
-        x1 = x[:, :100]
-        x2 = x[:, 100:200]
-        x3 = x[:, 200:]
+        x1, x2, x3 = torch.split(x, [100, 100, 100], dim=1)
         x = (x1, x2, x3)
 
         results = []
