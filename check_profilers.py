@@ -1,11 +1,14 @@
 import os
 import argparse
+from functools import partial
 import torch
 import torch.nn as nn
 
 from mmdet.registry import MODELS
+from mmdet.structures.det_data_sample import DetDataSample
 from mmengine.config import Config
 from mmengine.registry import init_default_scope
+from mmengine.model import revert_sync_batchnorm
 
 from mmengine.analysis import get_model_complexity_info
 from fvcore.nn import FlopCountAnalysis
@@ -88,7 +91,9 @@ if __name__ == "__main__":
             "/mmdetection/configs/rtmdet/rtmdet-ins_s_8xb32-300e_coco.py"
         )
         init_default_scope(cfg.get("default_scope", "mmdet"))
+        cfg.model['bbox_head']['num_classes'] = 8
         model = MODELS.build(cfg.model)
+        model = revert_sync_batchnorm(model)
         input_shape = (1, 3, 640, 640)
     elif args.model_type == "unshared_linears":
         model = SharedLinearLayers(shared=False)
