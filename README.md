@@ -34,10 +34,11 @@ mmengine - WARNING - Unsupported operator aten::silu_ encountered 92 time(s)
 - 하지만, DeepSpeed에서는 21G의 4배 이상의 값인 92 GFLOPs를 보고하고 있습니다.
 - mmengine과 deepspeed profiling 결과를 1:1 로 비교해본 결과, deepspeed 쪽에서 RTMDET의 bbox_head 특히, shared detection head인 `self.cls_convs`와 `self.reg_convs` 쪽에서 FLOPs 값이 중복으로 더해지고 있는 것을 발견하였습니다.
 ### Shared Linears
-[#TODO: 그림]
-- 중복 계산 오류를 검증하기 위해 위 그림과 같이 fully connected layer 3개와 batch norm으로 구성된 네트워크를 준비하였습니다.
+![shared linears architecture](asset/shared_linears.png)
+- 중복 계산 오류를 검증하기 위해 위 그림과 같이 fully connected layer 3개와 batch norm으로 구성된 네트워크를 준비하였습니다. (그림에서 batch norm은 생략되었습니다.)
 - 100x100 fully connected layer는 10 KMACs 연산량을 가지고 있습니다.
-- 총 3개의 fully connected layer로 구성되어 있으므로 모델은 총 30 KMACs (60 KFLOPs)의 연산량을 가지고 있습니다.
+- [1, 300] 크기의 tensor가 [1, 100] 크기의 tensor 3개로 쪼개져서 각각 fully connected layer의 input으로 들어갑니다.
+- 따라서, 모델은 총 30 KMACs (60 KFLOPs)의 연산량을 가지고 있습니다.
 - `shared` 옵션을 `True`로 설정하면 parameter 수를 1/3로 절약할 수 있지만, FLOPs 관점에서는 차이가 없어야 합니다.
 
 ### 오류 구현
