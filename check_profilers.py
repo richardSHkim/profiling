@@ -72,6 +72,7 @@ if __name__ == "__main__":
         nargs="+",
         type=str,
         default=["mmengine", "fvcore", "calflops", "deepspeed", "torch_profiler"],
+        choices=["mmengine", "fvcore", "calflops", "deepspeed", "torch_profiler"],
     )
     parser.add_argument("--output_dir", type=str, default="outputs")
     args = parser.parse_args()
