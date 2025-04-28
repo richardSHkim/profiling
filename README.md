@@ -48,7 +48,7 @@ docker run --gpus all --rm profiling shared_linears
 ```
 - 해당 모델에 대해서 `shared` 옵션을 `False`로 했을 때와 `True`로 했을 때의 FLOPs 값을 비교해보면, mmengine과 torch profiler는 값의 차이가 없습니다.
 - 반면, calflops와 deepspeed의 경우 `shared=True`로 설정했을 때, FLOPs가 중복으로 계산되어 60 KFLOPs의 3배인 180 KFLOPs를 보고합니다.
-- 해당 오류는 deepspeed에 (issue)[#TODO: 링크]로 남겨놓았습니다.
+- 해당 오류는 deepspeed에 [issue](https://github.com/deepspeedai/DeepSpeed/issues/7256)로 남겨놓았습니다.
 
 ### PyTorch Profiler 결과
 - 위 FLOPs/MACs 테스트와 shared linears 테스트에서 항상 정확한 결과를 보고한 profiler는 pytorch profiler가 유일했습니다.
