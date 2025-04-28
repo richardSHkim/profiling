@@ -1,7 +1,7 @@
 # 0. Docker 환경 준비
 ```bash
 git clone https://github.com/richardSHkim/profiling
-cd profiling/docker
+cd profiling
 docker build -t profiling .
 ```
 # 1. MMENGINE의 `get_model_complexity_info` 함수는 FLOPs가 아닌 MACs 값을 보고함.
