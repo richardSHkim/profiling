@@ -54,9 +54,8 @@ mmengine - WARNING - Unsupported operator aten::silu_ encountered 92 time(s)
 docker run --gpus all --rm profiling unshared_linears
 docker run --gpus all --rm profiling shared_linears
 ```
-
 - 결과적으로, fvcore, mmengine과 pytorch profiler는 값의 차이가 없지만, calflops와 deepspeed의 경우, shared layer를 사용했을 때, FLOPs가 중복으로 계산되어 60 KFLOPs의 3배인 180 KFLOPs를 보고함.
-- 해당 오류는 deepspeed에 (issue)[#TODO: 링크]로 남겨놓음.
+- 해당 오류는 deepspeed에 [issue](https://github.com/deepspeedai/DeepSpeed/issues/7256)로 남겨놓음.
 
 ## 3. Leaderboard Score 수정
 - 요약하자면, fvcore와 mmengine의 결과는 사실 MACs 값이었고, calflops, deepspeed는 shared layer에 대해서 중복된 계산값을 보고하고 있었음.
