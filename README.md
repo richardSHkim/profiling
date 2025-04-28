@@ -37,7 +37,7 @@ mmengine - WARNING - Unsupported operator aten::silu_ encountered 92 time(s)
 ## 2. mmengine 외 여러 FLOPS 계산 툴의 수치 비교
 
 ### pytorch profiler
-- mmengine을 통해 도출한 값과 유사하게, pytorch profiler는 RTMDet-Ins-s 모델에 대해서 43 GFLOPs 값을 보고함.
+- mmengine을 통해 도출한 값과 유사하게, pytorch profiler는 RTMDet-Ins-s 모델에 대해서 42 GFLOPs 값을 보고함.
 - 그리고 mmengine에서와 달리, unsupported operator에 대한 Warning이 더이상 발생하지 않음.
 
 ### calflops와 deepspeed
@@ -64,6 +64,6 @@ docker run --gpus all --rm profiling shared_linears
 
 ## 3. Leaderboard Score 수정
 - 요약하자면, fvcore와 mmengine의 결과는 사실 MACs 값이었고, calflops, deepspeed는 shared layer에 대해서 중복된 계산값을 보고하고 있었음.
-- RTMDet-Ins-s 모델의 FLOPs 값으로 pytorch profiler의 계산 값인 43 GFLOPs를 사용하고자 함.
-- Score 계산식에 21 GFLOPs 대신 43 GFLOPs를 대입하면 0.012261 점이 깎이게 되며, 기존 score인 0.50571점에서 해당 값을 빼면, 최종 score는 0.49345점이 됨.
->  $0.1 \times \exp(-21 / 136) - 0.1 \times \exp(-43 / 136) = 0.012261$
+- RTMDet-Ins-s 모델의 FLOPs 값으로 pytorch profiler의 계산 값인 42 GFLOPs를 사용하고자 함.
+- Score 계산식에 21 GFLOPs 대신 42 GFLOPs를 대입하면 0.012261 점이 깎이게 되며, 기존 score인 0.50571점에서 해당 값을 빼면, 최종 score는 0.49345점이 됨.
+>  $0.1 \times \exp(-21 / 136) - 0.1 \times \exp(-42 / 136) = 0.012261$
