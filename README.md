@@ -56,7 +56,7 @@ mmengine - WARNING - Unsupported operator aten::silu_ encountered 92 time(s)
 docker run --gpus all --rm profiling unshared_linears
 docker run --gpus all --rm profiling shared_linears
 ```
-- pytorch profiler는 shared layer 사용 여부에 상관 없이 같은 60 KFLOPs를 기록함.
+- pytorch profiler는 shared layer 사용 여부에 상관 없이 60 KFLOPs를 기록함.
 - 반면, calflops와 deepspeed의 경우, shared layer를 사용했을 때, FLOPs가 중복으로 계산되어 60 KFLOPs의 3배인 180 KFLOPs를 보고함.
 - 해당 오류는 deepspeed에 [issue](https://github.com/deepspeedai/DeepSpeed/issues/7256)로 남겨놓음.
 
