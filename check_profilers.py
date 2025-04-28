@@ -130,13 +130,13 @@ if __name__ == "__main__":
             os.path.join(args.output_dir, f"{args.model_type}_mmengine.yaml"), "w"
         ) as f:
             print(outputs["out_arch"], file=f)
-        print_str += f"mmengine: {int(flops / div)} {unit}, (MACs actually)\n"
+        print_str += f"mmengine: {round(flops / div, 1)} {unit}, (MACs actually)\n"
 
     # fvcore
     if "fvcore" in args.profilers:
         flops = FlopCountAnalysis(model, torch.zeros(input_shape).to("cuda"))
         flops = flops.total()
-        print_str += f"fvcore: {int(flops / div)} {unit}, (MACs actually)\n"
+        print_str += f"fvcore: {round(flops / div, 1)} {unit}, (MACs actually)\n"
 
     # calflops
     if "calflops" in args.profilers:
@@ -147,7 +147,7 @@ if __name__ == "__main__":
             output_as_string=False,
             output_precision=4,
         )
-        print_str += f"calflops: {int(flops / div)} {unit}\n"
+        print_str += f"calflops: {round(flops / div, 1)} {unit}\n"
 
     # deepspeed
     if "deepspeed" in args.profilers:
@@ -167,7 +167,7 @@ if __name__ == "__main__":
             ),  # path to the output file. If None, the profiler prints to stdout.
             ignore_modules=None,
         )  # the list of modules to ignore in the profiling
-        print_str += f"deepspeed: {int(flops / div)} {unit}\n"
+        print_str += f"deepspeed: {round(flops / div, 1)} {unit}\n"
 
     # pytorch profiler
     if "torch_profiler" in args.profilers:
@@ -176,7 +176,7 @@ if __name__ == "__main__":
         ) as prof:
             model(torch.zeros(input_shape).to("cuda"))
         flops = sum(event.flops for event in prof.key_averages())
-        print_str += f"torch profiler: {int(flops / div)} {unit}\n"
+        print_str += f"torch profiler: {round(flops / div, 1)} {unit}\n"
 
     # logging
     print(print_str)
