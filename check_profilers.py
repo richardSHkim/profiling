@@ -96,8 +96,8 @@ if __name__=="__main__":
     model.eval()
 
 
-    # print
-    print_str = f"Profiling results on {args.model_type} with {', '.join(args.profilers)}\n"
+    # for logging
+    print_str = f"\nProfiling results on {args.model_type} with {', '.join(args.profilers)}\n"
     if args.model_type in ["linear", "unshared_linears", "shared_linears"]:
         div = 1e3
         unit = "KFLOPs"
@@ -156,9 +156,7 @@ if __name__=="__main__":
         with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], with_flops=True) as prof:
             model(torch.zeros(input_shape).to("cuda"))
         flops = sum(event.flops for event in prof.key_averages())
-        print_str += f"torch profiler: {int(flops / div)} {unit}"
+        print_str += f"torch profiler: {int(flops / div)} {unit}\n"
 
-
-    print("\n")
+    # logging
     print(print_str)
-    print("\n")
