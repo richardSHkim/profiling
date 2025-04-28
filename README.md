@@ -43,6 +43,7 @@ mmengine - WARNING - Unsupported operator aten::silu_ encountered 92 time(s)
 ### calflops와 deepspeed
 - calflops와 deepspeed에서 RTMDet-ins-s 모델에 대해 92 GFLOPs를 보고함.
 - mmengine과 deepspeed의 profiling 결과를 1:1 로 비교해본 결과, RTMDet의 bbox_head에서 shared layer인 `self.cls_convs`와 `self.reg_convs`의 FLOPs 값이 중복으로 더해지는 오류를 발견함.
+- `self.cls_convs`와 `self.reg_convs`가 shared layer라는 것에 대한 코드 링크 ([link1](https://github.com/open-mmlab/mmdetection/blob/main/mmdet/models/dense_heads/rtmdet_ins_head.py#L919-L920), [link2](https://github.com/open-mmlab/mmdetection/blob/main/mmdet/models/dense_heads/rtmdet_ins_head.py#L949-L953)). RTMDet 논문에서는 Section 3.2, Shared detection head 파트에서 확인할 수 있음.
 
 ### 중복 계산 오류 검증
 ![shared linears architecture](asset/shared_linears.png)
