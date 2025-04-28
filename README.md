@@ -22,10 +22,10 @@ docker run --gpus all --rm profiling linear
 ```bash
 docker run --gpus all --rm profiling rtmdet
 ```
-- input shape $[1, 3, 640, 640]$ 기준으로, mmengine은 21.5 GMACs를 보고함.
-- [논문](https://arxiv.org/pdf/2212.07784) Table 3와 [official code의 README](https://github.com/open-mmlab/mmdetection/tree/main/configs/rtmdet#instance-segmentation)에서 RTMDET-Ins-s의 GFLOPs 수치를 21.5로 보고하고 있음.
+- input shape $[1, 3, 640, 640]$ 기준으로, mmengine은 21 GMACs를 보고함.
+- [논문](https://arxiv.org/pdf/2212.07784) Table 3와 [official code의 README](https://github.com/open-mmlab/mmdetection/tree/main/configs/rtmdet#instance-segmentation)에서 RTMDET-Ins-s의 GFLOPs 수치를 21로 보고하고 있음.
 - 그러나, 비교군으로 사용한 YOLOv5 계열의 Table 3상 수치는 [official repository](https://github.com/ultralytics/yolov5?tab=readme-ov-file#%EF%B8%8F-segmentation)에서 보고하는 FLOPs 값의 절반인 것을 확인할 수 있으며, 이를 통해 RTMDet의 논문에서 수치의 실제 단위가 GMACs라 추정할 수 있음.
-- 결과적으로, (fvcore와) mmengine 기반으로 측정했을 때, RTMDet-Ins-s 모델은 43 GFLOPs($= 2 \times 21.5$ GMACs)를 기록함을 도출할 수 있음.
+- 결과적으로, (fvcore와) mmengine 기반으로 측정했을 때, RTMDet-Ins-s 모델은 42 GFLOPs($= 2 \times 21$ GMACs)를 기록함을 도출할 수 있음.
 
 ### Warning 관련 첨언
 ```bash
@@ -37,7 +37,7 @@ mmengine - WARNING - Unsupported operator aten::silu_ encountered 92 time(s)
 ## 2. mmengine 외 여러 FLOPS 계산 툴의 수치 비교
 
 ### pytorch profiler
-- mmengine을 통해 도출한 값과 같이, pytorch profiler는 RTMDET-Ins-s 모델에 대해서 43 GFLOPs 값을 보고함.
+- mmengine을 통해 도출한 값과 유사하게, pytorch profiler는 RTMDET-Ins-s 모델에 대해서 43 GFLOPs 값을 보고함.
 - 그리고 mmengine에서와 달리, unsupported operator에 대한 Warning이 더이상 발생하지 않음.
 
 ### calflops와 deepspeed
